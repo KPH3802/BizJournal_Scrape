@@ -21,6 +21,15 @@ def scrape_site(soup):
             dict_list.append(d)
         else:
             pass
+        print("Finished the page!")
+    try: 
+        browser.find_link_by_partial_text('Next').click() 
+        html = browser.html
+        soup = BeautifulSoup(html, 'html.parser')
+        t.sleep(2)
+        scrape_site(soup)
+    except:
+        print("No more site to scrape!")
     print("Finished the page!")
     # browser.visit(button)
     # new_dict = []
