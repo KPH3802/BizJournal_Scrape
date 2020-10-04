@@ -21,7 +21,7 @@ def scrape_site(soup):
             dict_list.append(d)
         else:
             pass
-    print("Finished Scraping!")
+    print("Finished the page!")
     # browser.visit(button)
     # new_dict = []
     # for i in dict_list:
@@ -38,3 +38,6 @@ def scrape_site(soup):
 
     #     except:
     #         print("Error! trying to get")
+    
+
+    # print("Finished Scraping!")
