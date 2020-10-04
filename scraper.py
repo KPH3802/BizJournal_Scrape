@@ -29,24 +29,30 @@ def scrape_site(soup):
         t.sleep(2)
         scrape_site(soup)
     except:
-        print("No more site to scrape!")
+        print("Scrapping individual sites")
+        scrape_individuals(dict_list)
+
     print("Finished the page!")
     # browser.visit(button)
+
+    def scrape_individuals(dict_list):
+
     # new_dict = []
-    # for i in dict_list:
+    for i in dict_list:
 
-    #     try:
-    #         browser.visit(i["Link"])
-    #         t.sleep(1)
-    #         html = browser.html
-    #         soup = BeautifulSoup(html, 'html.parser')
-    #         info_list = soup.find_all('p', class_ = 'cXenseParse')
-    #         i["Title"] = info_list[0].text
-    #         i["Blurb"] = info_list[1].text
-    #         new_dict.append(i)
+        try:
+            browser.visit(i["Link"])
+            t.sleep(1)
+            html = browser.html
+            soup = BeautifulSoup(html, 'html.parser')
+            info_list = soup.find_all('p', class_ = 'cXenseParse')
+            i["Title"] = info_list[0].text
+            i["Blurb"] = info_list[1].text
+            new_dict.append(i)
 
-    #     except:
-    #         print("Error! trying to get")
+        except:
+            print("Error! trying to get")
+    print("done with individuals!")
     
 
     # print("Finished Scraping!")
