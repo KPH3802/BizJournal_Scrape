@@ -16,7 +16,7 @@ try:
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
     scrape_site(soup)
-    # browser.find_link_by_partial_text('Next').click() 
+    
     # html = browser.html
     # soup = BeautifulSoup(html, 'html.parser')
     # t.sleep(2)

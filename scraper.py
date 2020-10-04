@@ -21,38 +21,60 @@ def scrape_site(soup):
             dict_list.append(d)
         else:
             pass
-        print("Finished the page!")
-    try: 
-        browser.find_link_by_partial_text('Next').click() 
-        html = browser.html
-        soup = BeautifulSoup(html, 'html.parser')
-        t.sleep(2)
-        scrape_site(soup)
-    except:
-        print("Scrapping individual sites")
-        scrape_individuals(dict_list)
+    print("Finished with this page.")
+    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    browser = Browser('chrome', headless=False, **executable_path)
+    browser.visit(button)
+    # try:
+    #     executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    #     browser = Browser('chrome', headless=False, **executable_path)
+    #     browser.visit(button)
+    #     # t.sleep(2)
+    #     # html = browser.html
+    #     # soup = BeautifulSoup(html, 'html.parser')
+    #     # scrape_site(soup)
+    # except:
+    #     print("didn't visit")
+        # print(dict_list)
+#         # print(dict_list)
+#         # scrape_individuals(dict_list)
+#         new_dict = []
+#         for i in dict_list:
 
-    print("Finished the page!")
-    # browser.visit(button)
+#             try:
+#                 browser.visit(i["Link"])
+#                 t.sleep(1)
+#                 html = browser.html
+#                 soup = BeautifulSoup(html, 'html.parser')
+#                 info_list = soup.find_all('p', class_ = 'cXenseParse')
+#                 i["Title"] = info_list[0].text
+#                 i["Blurb"] = info_list[1].text
+#                 new_dict.append(i)
 
-    def scrape_individuals(dict_list):
+#             except:
+#                 print("Finished with indidudals")
 
-    # new_dict = []
-    for i in dict_list:
+#     # print("Finished the page!")
+#     # browser.visit(button)
 
-        try:
-            browser.visit(i["Link"])
-            t.sleep(1)
-            html = browser.html
-            soup = BeautifulSoup(html, 'html.parser')
-            info_list = soup.find_all('p', class_ = 'cXenseParse')
-            i["Title"] = info_list[0].text
-            i["Blurb"] = info_list[1].text
-            new_dict.append(i)
+# # def scrape_individuals(dict_list):
 
-        except:
-            print("Error! trying to get")
-    print("done with individuals!")
+# #     new_dict = []
+#     for i in dict_list:
+
+#         try:
+#             browser.visit(i["Link"])
+#             t.sleep(1)
+#             html = browser.html
+#             soup = BeautifulSoup(html, 'html.parser')
+#             info_list = soup.find_all('p', class_ = 'cXenseParse')
+#             i["Title"] = info_list[0].text
+#             i["Blurb"] = info_list[1].text
+#             new_dict.append(i)
+
+#         except:
+#             print("Error! trying to get")
+#     print("done with individuals!")
     
 
-    # print("Finished Scraping!")
+#     # print("Finished Scraping!")
