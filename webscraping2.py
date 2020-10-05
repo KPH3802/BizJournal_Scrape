@@ -10,6 +10,7 @@ from pprint import pprint
 from scraper import scrape_site
 from pathlib import Path
 import pandas as pd
+from config import API_KEY, SEARCH_ENGINE_ID
 
 file_to_output = Path("Data_Scraped/Contacts.csv")
 
@@ -47,8 +48,25 @@ def scrape_site(soup):
                 info_list = soup.find_all('p', class_ = 'cXenseParse')
                 i["Title"] = info_list[0].text
                 i["Blurb"] = info_list[1].text
-                Final_List.append(i)
+                
+                #Google Search query
+                query = i['Name'] + ' ' + i["Title"]
+                # Using the first page of Google
+                page = 1
+                start = (page - 1) * 10 + 1
+                url = f"https://www.googleapis.com/customsearch/v1?key={API_KEY}&cx={SEARCH_ENGINE_ID}&q={query}&start={start}"
                 # print(i["Name"])
+                search_name = i["Name"]
+                try: 
+                    # make the API request
+                    data = requests.get(url).json()
+                    search_items = data.get("items")
+                    link = search_item.get("link")
+                    i["Business Link"] = link
+                    print(link)
+                except:
+                    print(f"Could not get {search_name}")
+                Final_List.append(i)
         except:
             name = i["Name"]
             print(f"Couldn't find {name}")
@@ -58,7 +76,9 @@ def scrape_site(soup):
         soup = BeautifulSoup(html, 'html.parser')
         scrape_site(soup)
     except:
-        print("Finished with next!")
+        print("Finished with HBJ! Now moving to Google Search")
+        for i in Final_List:
+
         # print(Final_List)
         # try:
         #     df = pd.DataFrame(Final_List)
