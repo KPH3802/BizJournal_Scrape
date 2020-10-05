@@ -60,8 +60,12 @@ def scrape_site(soup):
     except:
         print("Finished with next!")
         # print(Final_List)
-        df = pd.DataFrame(Final_List)
-        df.to_csv("Data_Scraped/Contacts.csv", index=False)
+        try:
+            df = pd.DataFrame(Final_List)
+            df.to_csv("Data_Scraped/Contacts.csv", index=False)
+        except IOError:
+            print("I/O Error")
+
         # df = pd.DataFrame(dict_list)
         # df.to_csv("Contacts.csv", index=True)
         # csv_columns = ['Name','Link','Title', 'Blurb']
