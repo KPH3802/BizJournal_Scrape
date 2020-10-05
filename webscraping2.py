@@ -65,12 +65,20 @@ def scrape_site(soup):
         # df.to_csv("Contacts.csv", index=True)
         csv_columns = ['Name','Link','Title', 'Blurb']
         try:
-          with open('contact.csv', 'w', encoding='utf8', newline='') as csvfile:
-              writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
-              writer.writeheader()
-              writer.writerows(Final_List)
-        except IOError:
-            print("I/O error")
+            with open(file_to_output, 'w') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+                writer.writeheader()
+                for data in Final_List:
+                    writer.writerow(data)
+            except IOError:
+                print("I/O error")
+        # try:
+        #   with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
+        #       writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
+        #       writer.writeheader()
+        #       writer.writerows(Final_List)
+        # except IOError:
+        #     print("I/O error")
         
 
 
