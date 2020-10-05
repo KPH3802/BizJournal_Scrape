@@ -59,17 +59,16 @@ def scrape_site(soup):
     except:
         print("Finished with next!")
         # print(Final_List)
-        csv_columns = ['Name','Link','Title', 'Blurb']
+        # csv_columns = ['Name','Link','Title', 'Blurb']
 
 
-        try:
-            with open(file_to_output, 'w') as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-                writer.writeheader()
-                for data in Final_List:
-                    writer.writerow(data)
-        except IOError:
-            print("I/O error")
+        # try:
+        with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
+            writer.writeheader()
+            writerows(Final_List)
+        # except IOError:
+        #     print("I/O error")
         
 
 
