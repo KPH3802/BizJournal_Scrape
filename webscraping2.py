@@ -70,8 +70,8 @@ def scrape_site(soup):
                 writer.writeheader()
                 for data in Final_List:
                     writer.writerow(data)
-            except IOError:
-                print("I/O error")
+        except IOError:
+            print("I/O error")
         # try:
         #   with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
         #       writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
