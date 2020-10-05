@@ -9,6 +9,7 @@ import time as t
 from pprint import pprint
 from scraper import scrape_site
 from pathlib import Path
+import pandas as pd
 
 file_to_output = Path("Contacts_Dir/Contacts.csv")
 
@@ -60,13 +61,15 @@ def scrape_site(soup):
         print("Finished with next!")
         # print(Final_List)
         # csv_columns = ['Name','Link','Title', 'Blurb']
-
+        df = pd.DataFrame(dict_list)
+        df.to_csv("Contacts.csv", index=True)
 
         # try:
-        with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
-            writer.writeheader()
-            writerows(Final_List)
+        # with open('contact.csv', 'w', encoding='utf8', newline='') as csvfile:
+        #     writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
+        #     writer.writeheader()
+
+        #     writerows(Final_List)
         # except IOError:
         #     print("I/O error")
         
