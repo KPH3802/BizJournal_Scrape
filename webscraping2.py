@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import re
 import time
 import requests
+import csv
 from selenium import webdriver
 import time as t
 from pprint import pprint
@@ -36,14 +37,14 @@ def scrape_site(soup):
 
         try:
                 browser.visit(i["Link"])
-                t.sleep(1)
+                # t.sleep(1)
                 html = browser.html
                 soup = BeautifulSoup(html, 'html.parser')
                 info_list = soup.find_all('p', class_ = 'cXenseParse')
                 i["Title"] = info_list[0].text
                 i["Blurb"] = info_list[1].text
                 Final_List.append(i)
-                print(i["Name"])
+                # print(i["Name"])
         except:
             name = i["Name"]
             print(f"Couldn't find {name}")
@@ -54,7 +55,18 @@ def scrape_site(soup):
         scrape_site(soup)
     except:
         print("Finished with next!")
-        print(Final_List)
+        # print(Final_List)
+        csv_columns = ['Name','Link','Title', 'Blurb']
+
+        csv_file = "Conacts_Dir/Contacts.csv"
+        try:
+            with open(csv_file, 'w') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+                writer.writeheader()
+                for data in Final_List:
+                    writer.writerow(data)
+        except IOError:
+            print("I/O error")
         
 
 
