@@ -60,30 +60,30 @@ def scrape_site(soup):
     except:
         print("Finished with next!")
         # print(Final_List)
-        try:
-            df = pd.DataFrame(Final_List)
-            df.to_csv("Data_Scraped/Contacts.csv", index=False)
-        except IOError:
-            print("I/O Error")
+        # try:
+        #     df = pd.DataFrame(Final_List)
+        #     df.to_csv("Data_Scraped/Contacts.csv", index=False)
+        # except IOError:
+        #     print("I/O Error")
 
         # df = pd.DataFrame(dict_list)
         # df.to_csv("Contacts.csv", index=True)
         # csv_columns = ['Name','Link','Title', 'Blurb']
-        # try:
-        #     with open(file_to_output, 'w') as csvfile:
-        #         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-        #         writer.writeheader()
-        #         for data in Final_List:
-        #             writer.writerow(data)
+
+        # with open(file_to_output, 'w') as csvfile:
+        #     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+        #     writer.writeheader()
+        #     for data in Final_List:
+        #         writer.writerow(data)
         # except IOError:
         #     print("I/O error")
-        # try:
-        #   with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
-        #       writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
-        #       writer.writeheader()
-        #       writer.writerows(Final_List)
-        # except IOError:
-        #     print("I/O error")
+        try:
+          with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
+              writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
+              writer.writeheader()
+              writer.writerows(Final_List)
+        except IOError as error:
+            print(error)
         
 
 
