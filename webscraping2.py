@@ -32,7 +32,6 @@ def scrape_site(soup):
         else:
             pass
     print("Finished with this page.")
-    new_dict = []
     for i in dict_list:
 
         try:
@@ -43,10 +42,11 @@ def scrape_site(soup):
                 info_list = soup.find_all('p', class_ = 'cXenseParse')
                 i["Title"] = info_list[0].text
                 i["Blurb"] = info_list[1].text
-                new_dict.append(i)
-                print("individ")
+                Final_List.append(i)
+                print(i["Name"])
         except:
-            print("Couldn't find")
+            name = i["Name"]
+            print(f"Couldn't find {name}")
     try:
         browser.visit(button)
         html = browser.html
@@ -54,7 +54,7 @@ def scrape_site(soup):
         scrape_site(soup)
     except:
         print("Finished with next!")
-        print(new_dict)
+        print(Final_List)
         
 
 
@@ -65,6 +65,7 @@ try:
     browser.visit(url)
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
+    Final_List = []
     scrape_site(soup)
     # scrape_individuals(dict_list)
     # print(new_dict)
