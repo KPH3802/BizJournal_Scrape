@@ -11,7 +11,7 @@ from scraper import scrape_site
 from pathlib import Path
 import pandas as pd
 
-file_to_output = Path("Contacts_Dir/Contacts.csv")
+file_to_output = Path("Data_Scraped/Contacts.csv")
 
 def scrape_site(soup):
     links = []
@@ -60,18 +60,17 @@ def scrape_site(soup):
     except:
         print("Finished with next!")
         # print(Final_List)
-        # csv_columns = ['Name','Link','Title', 'Blurb']
-        df = pd.DataFrame(dict_list)
-        df.to_csv("Contacts.csv", index=True)
 
-        # try:
-        # with open('contact.csv', 'w', encoding='utf8', newline='') as csvfile:
-        #     writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
-        #     writer.writeheader()
-
-        #     writerows(Final_List)
-        # except IOError:
-        #     print("I/O error")
+        # df = pd.DataFrame(dict_list)
+        # df.to_csv("Contacts.csv", index=True)
+        csv_columns = ['Name','Link','Title', 'Blurb']
+        try:
+          with open('contact.csv', 'w', encoding='utf8', newline='') as csvfile:
+              writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
+              writer.writeheader()
+              writer.writerows(Final_List)
+        except IOError:
+            print("I/O error")
         
 
 
