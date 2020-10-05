@@ -8,6 +8,9 @@ from selenium import webdriver
 import time as t
 from pprint import pprint
 from scraper import scrape_site
+from pathlib import Path
+
+file_to_output = Path("Contacts_Dir/Contacts.csv")
 
 def scrape_site(soup):
     links = []
@@ -58,9 +61,9 @@ def scrape_site(soup):
         # print(Final_List)
         csv_columns = ['Name','Link','Title', 'Blurb']
 
-        csv_file = "Conacts_Dir/Contacts.csv"
+
         try:
-            with open(csv_file, 'w') as csvfile:
+            with open(file_to_output, 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
                 writer.writeheader()
                 for data in Final_List:
