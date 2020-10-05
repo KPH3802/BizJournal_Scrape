@@ -132,4 +132,9 @@ dmypy.json
 .DS_Store
 
 # ignoring Data directory
-/Data_Scraped
+Data_Scraped/
+Contacts.csv
+Data_Scraped/Contacts.csv
+
+# ignore config file
+config.py
