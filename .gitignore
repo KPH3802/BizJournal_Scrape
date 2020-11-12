@@ -138,3 +138,6 @@ Data_Scraped/Contacts.csv
 
 # ignore config file
 config.py
+
+# ignore csv's
+*.csv
