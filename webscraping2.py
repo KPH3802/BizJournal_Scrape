@@ -11,8 +11,9 @@ from scraper import scrape_site
 from pathlib import Path
 import pandas as pd
 from config import API_KEY, SEARCH_ENGINE_ID
+from urllib.error import HTTPError
 
-file_to_output = Path("Data_Scraped/Contacts.csv")
+file_to_output = Path("Data_Scraped/Contacts.csv") 
 
 def scrape_site(soup):
     links = []
@@ -37,6 +38,7 @@ def scrape_site(soup):
             dict_list.append(d)
         else:
             pass
+    print(dict_list)
     print("Finished with this page.")
     for i in dict_list:
 
@@ -48,55 +50,40 @@ def scrape_site(soup):
                 info_list = soup.find_all('p', class_ = 'cXenseParse')
                 i["Title"] = info_list[0].text
                 i["Blurb"] = info_list[1].text
-                
-                #Google Search query
-                query = i['Name'] + ' ' + i["Title"]
-                # Using the first page of Google
-                page = 1
-                start = (page - 1) * 10 + 1
-                url = f"https://www.googleapis.com/customsearch/v1?key={API_KEY}&cx={SEARCH_ENGINE_ID}&q={query}&start={start}"
-                # print(i["Name"])
-                search_name = i["Name"]
-                try: 
-                    # make the API request
-                    data = requests.get(url).json()
-                    search_items = data.get("items")
-                    link = search_item.get("link")
-                    i["Business Link"] = link
-                    print(link)
-                except:
-                    print(f"Could not get {search_name}")
                 Final_List.append(i)
-        except:
-            name = i["Name"]
-            print(f"Couldn't find {name}")
+
+        except HTTPError as error:
+            print(error)
+        
     try:
         browser.visit(button)
         html = browser.html
         soup = BeautifulSoup(html, 'html.parser')
         scrape_site(soup)
     except:
-        print("Finished with HBJ! Now moving to Google Search")
+        print("Writting to file!")
+        
         for i in Final_List:
+             
+            #Google Search query
+                query = str(i['Name']) + ' ' + str(i["Title"])
+                # print(len(query))
+                # print(query)
+                # Using the first page of Google
+                page = 1
+                start = (page - 1) * 10 + 1
+                url = f"https://www.googleapis.com/customsearch/v1?key={API_KEY}&cx={SEARCH_ENGINE_ID}&q={query}&start={start}"
+                # print(i["Name"])
+                # print(url)
+                # search_name = i["Name"]
+                data = requests.get(url).json()
+                # print(data)
+                search_items = data.get("items")
+                # print(type(search_items))
+                link = search_items[0].get("link")
+                # print(link)
+                i["Business Link"] = link
 
-        # print(Final_List)
-        # try:
-        #     df = pd.DataFrame(Final_List)
-        #     df.to_csv("Data_Scraped/Contacts.csv", index=False)
-        # except IOError:
-        #     print("I/O Error")
-
-        # df = pd.DataFrame(dict_list)
-        # df.to_csv("Contacts.csv", index=True)
-        # csv_columns = ['Name','Link','Title', 'Blurb']
-
-        # with open(file_to_output, 'w') as csvfile:
-        #     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-        #     writer.writeheader()
-        #     for data in Final_List:
-        #         writer.writerow(data)
-        # except IOError:
-        #     print("I/O error")
         try:
           with open(file_to_output, 'w', encoding='utf8', newline='') as csvfile:
               writer = csv.DictWriter(csvfile, fieldnames=Final_List[0].keys())
